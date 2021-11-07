@@ -1,1 +1,1 @@
-# eponuda_parser
+# eponuda scraper
