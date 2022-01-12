@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup as soup
 import re
-from models import Cena, Linkovi, Proizvod, Prodavnica
+from models import Cena, Linkovi, Proizvod, Prodavnica, MyEncoder
 import json
 
 product_name = ''
@@ -26,8 +26,8 @@ with open('page.html', 'r') as page:
         store_link = re.search(r'href="([^"]*)"', str(item))
         item_pos = re.search(r'data-position="([0-9]*)"', str(item))
         
-        cena = Cena()
-        link = Linkovi()
+        cena = Cena(0, -1, 0, 0)
+        link = Linkovi(0, "")
 
         if price:
             #print(price.group(1))
@@ -56,8 +56,11 @@ with open('page.html', 'r') as page:
             if link.id_prod not in linkovi.keys():
                 linkovi[link.id_prod] = link
 
-proizvod = Proizvod(product_name, 0)
+
+encoder = MyEncoder()
+proizvod = Proizvod(product_name, 0, {}, {})
 proizvod.cene = cene
 proizvod.linkovi = linkovi
-proizvod.print()
-print(json.dumps(proizvod))
+#proizvod.print()
+#print(encoder.encode(cene))
+print(encoder.encode(proizvod))
