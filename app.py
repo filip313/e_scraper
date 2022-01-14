@@ -1,7 +1,8 @@
 from urllib import request
 from bs4 import BeautifulSoup as soup
 import re
-from models import Cena, Linkovi, Proizvod, Prodavnica, MyEncoder
+import jsonpickle
+from models import Cena, Linkovi, Proizvod, Prodavnica
 from datetime import datetime
 
 def ucitaj_linkove(putanja):
@@ -108,13 +109,12 @@ def ispis(prodavnice, proizvodi):
 		print('\n')
 
 def save_data(proizvodi, prodavnice):
-	encoder = MyEncoder()	
 	
 	with open("proizvodi.json", 'w') as f:
-		f.write(encoder.encode(proizvodi))
+		f.write(jsonpickle.encode(proizvodi))
 
 	with open("prodavnice.json", 'w') as f:
-		f.write(encoder.encode(prodavnice))
+		f.write(jsonpickle.encode(prodavnice))
 
 putanja_do_linkova = "./linkovi.txt"
 linkovi = ucitaj_linkove(putanja_do_linkova)
@@ -127,7 +127,5 @@ for link in linkovi:
 	proizvodi[proi.id] = proi
 	prodavnice.update(prod)
 
-encoder = MyEncoder()
-#print(encoder.encode(prodavnice))
 ispis(prodavnice, proizvodi)
 save_data(proizvodi, prodavnice)
