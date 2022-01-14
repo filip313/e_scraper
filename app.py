@@ -107,6 +107,14 @@ def ispis(prodavnice, proizvodi):
 		
 		print('\n')
 
+def save_data(proizvodi, prodavnice):
+	encoder = MyEncoder()	
+	
+	with open("proizvodi.json", 'w') as f:
+		f.write(encoder.encode(proizvodi))
+
+	with open("prodavnice.json", 'w') as f:
+		f.write(encoder.encode(prodavnice))
 
 putanja_do_linkova = "./linkovi.txt"
 linkovi = ucitaj_linkove(putanja_do_linkova)
@@ -122,3 +130,4 @@ for link in linkovi:
 encoder = MyEncoder()
 #print(encoder.encode(prodavnice))
 ispis(prodavnice, proizvodi)
+save_data(proizvodi, prodavnice)
